@@ -12,6 +12,7 @@ import CoreData
 
 class ImageListViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
+    @IBOutlet weak var profileBtn: UIBarButtonItem!
     @IBOutlet weak var collectionView: UICollectionView!
     var imageUrls: [String] = []
     var coreDataImages: [NSManagedObject] = []
@@ -30,10 +31,9 @@ class ImageListViewController: UIViewController, UICollectionViewDelegate, UICol
         coreDataImages = fetchImagesFromCoreData()
     }
     
-    @IBAction func logOut(_ sender: Any) {
-        LocalStorage.shared.setUserIsLoggedIn(false)
-        guard let loginController = UIStoryboard(name: "LoginView", bundle: nil).instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController else {fatalError()}
-        navigationController?.pushViewController(loginController, animated: false)
+    @IBAction func openProfile(_ sender: Any) {
+        guard let profileController = UIStoryboard(name: "ProfileView", bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as? ProfileViewController else {fatalError()}
+        navigationController?.pushViewController(profileController, animated: false)
     }
     
     func fetchRandomImages() {
@@ -56,7 +56,6 @@ class ImageListViewController: UIViewController, UICollectionViewDelegate, UICol
                         self.collectionView.reloadData()
                     }
                 case .failure(let error):
-                    // Handle the error here
                     print(error)
                 }
             }

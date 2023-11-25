@@ -10,6 +10,9 @@
 		4C4B77373B1C1EC3305A98AA /* Pods_GalleryApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E493FF06DBE9278CD33F3B86 /* Pods_GalleryApp.framework */; };
 		912485982B12780D00FCC4F8 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 912485972B12780D00FCC4F8 /* CoreDataStack.swift */; };
 		9124859A2B127A6B00FCC4F8 /* InternetConnectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 912485992B127A6B00FCC4F8 /* InternetConnectivity.swift */; };
+		91946A602B12BB59001973E9 /* ProfileView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91946A5E2B12BB58001973E9 /* ProfileView.storyboard */; };
+		91946A612B12BB59001973E9 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91946A5F2B12BB58001973E9 /* ProfileViewController.swift */; };
+		91946A632B12BE26001973E9 /* UIImageView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91946A622B12BE26001973E9 /* UIImageView+Ext.swift */; };
 		9198FAD92B121DE60064AAB9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9198FAD82B121DE60064AAB9 /* AppDelegate.swift */; };
 		9198FADB2B121DE60064AAB9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9198FADA2B121DE60064AAB9 /* SceneDelegate.swift */; };
 		9198FADD2B121DE60064AAB9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9198FADC2B121DE60064AAB9 /* ViewController.swift */; };
@@ -30,6 +33,9 @@
 /* Begin PBXFileReference section */
 		912485972B12780D00FCC4F8 /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		912485992B127A6B00FCC4F8 /* InternetConnectivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternetConnectivity.swift; sourceTree = "<group>"; };
+		91946A5E2B12BB58001973E9 /* ProfileView.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ProfileView.storyboard; sourceTree = "<group>"; };
+		91946A5F2B12BB58001973E9 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		91946A622B12BE26001973E9 /* UIImageView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Ext.swift"; sourceTree = "<group>"; };
 		9198FAD52B121DE60064AAB9 /* GalleryApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GalleryApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9198FAD82B121DE60064AAB9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9198FADA2B121DE60064AAB9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -64,6 +70,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		91946A5D2B12BB58001973E9 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				91946A5E2B12BB58001973E9 /* ProfileView.storyboard */,
+				91946A5F2B12BB58001973E9 /* ProfileViewController.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
 		9198FACC2B121DE60064AAB9 = {
 			isa = PBXGroup;
 			children = (
@@ -91,6 +106,7 @@
 				9198FADE2B121DE60064AAB9 /* Main.storyboard */,
 				9198FAEC2B122C770064AAB9 /* Login */,
 				9198FAF42B12449D0064AAB9 /* ImageList */,
+				91946A5D2B12BB58001973E9 /* Profile */,
 				9198FAFA2B1245390064AAB9 /* Helper Classes */,
 				9198FAE12B121DEA0064AAB9 /* Assets.xcassets */,
 				9198FAE32B121DEA0064AAB9 /* LaunchScreen.storyboard */,
@@ -127,6 +143,7 @@
 				9198FB012B1267AD0064AAB9 /* Networking.swift */,
 				912485972B12780D00FCC4F8 /* CoreDataStack.swift */,
 				912485992B127A6B00FCC4F8 /* InternetConnectivity.swift */,
+				91946A622B12BE26001973E9 /* UIImageView+Ext.swift */,
 			);
 			path = "Helper Classes";
 			sourceTree = "<group>";
@@ -213,6 +230,7 @@
 				9198FAE22B121DEA0064AAB9 /* Assets.xcassets in Resources */,
 				9198FAE02B121DE60064AAB9 /* Main.storyboard in Resources */,
 				9198FAF02B122CAC0064AAB9 /* LoginView.storyboard in Resources */,
+				91946A602B12BB59001973E9 /* ProfileView.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -271,10 +289,12 @@
 				9198FADD2B121DE60064AAB9 /* ViewController.swift in Sources */,
 				9198FB022B1267AD0064AAB9 /* Networking.swift in Sources */,
 				9198FAD92B121DE60064AAB9 /* AppDelegate.swift in Sources */,
+				91946A632B12BE26001973E9 /* UIImageView+Ext.swift in Sources */,
 				912485982B12780D00FCC4F8 /* CoreDataStack.swift in Sources */,
 				9198FB002B12515A0064AAB9 /* ListViewCell.swift in Sources */,
 				9198FAF22B122EB20064AAB9 /* LoginViewModel.swift in Sources */,
 				9124859A2B127A6B00FCC4F8 /* InternetConnectivity.swift in Sources */,
+				91946A612B12BB59001973E9 /* ProfileViewController.swift in Sources */,
 				9198FAFC2B12454E0064AAB9 /* LocalStorage.swift in Sources */,
 				9198FADB2B121DE60064AAB9 /* SceneDelegate.swift in Sources */,
 			);

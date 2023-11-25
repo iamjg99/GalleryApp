@@ -7,6 +7,7 @@
 
 import UIKit
 import GoogleSignIn
+import Alamofire
 
 class LoginViewController: UIViewController {
     
@@ -22,6 +23,17 @@ class LoginViewController: UIViewController {
         googleLogin()
     }
     
+    func downloadImageWithAlamofire(url: URL, completion: @escaping (Data?) -> Void) {
+        AF.request(url).responseData { response in
+            switch response.result {
+            case .success(let data):
+                completion(data)
+            case .failure(let error):
+                print("Error downloading image: \(error.localizedDescription)")
+                completion(nil)
+            }
+        }
+    }
     
     func googleLogin() {
         
@@ -45,13 +57,24 @@ class LoginViewController: UIViewController {
             }
             
             guard let googleUser = authentication?.user,
-                  let userId = googleUser.userID,
-                  let idToken = googleUser.idToken
+                  let firstName = googleUser.profile?.givenName,
+                  let lastName = googleUser.profile?.familyName,
+                  let profileImage = googleUser.profile?.imageURL(withDimension: 320)
             else{
                 print("Error: ID token missing!");
                 return;
             }
+            LocalStorage.shared.setFirstname(firstName)
+            LocalStorage.shared.setLastname(lastName)
+            self?.downloadImageWithAlamofire(url: profileImage) { data in
+                guard let imageData = data else { return }
+                
+                let fileName = "downloadedImage.jpg"
+                LocalStorage.shared.saveImageDataToDocumentsDirectory(data: imageData, fileName: fileName)
+                
+                // Save the file path to UserDefaults
+                UserDefaults.standard.set(fileName, forKey: "savedImageFileName")
+            }
         }
     }
 }
-
