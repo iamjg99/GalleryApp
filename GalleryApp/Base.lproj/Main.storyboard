@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="o63-LY-fZ9">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22155" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="o63-LY-fZ9">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22131"/>
+        <capability name="Map view configurations" minToolsVersion="14.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -16,35 +18,35 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to the Gallery App" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ImU-rl-Ccw">
-                                <rect key="frame" x="90.666666666666686" y="233" width="212" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L3X-Qe-2Mj">
-                                <rect key="frame" x="166.66666666666666" y="577" width="59.666666666666657" height="35"/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="tintColor" systemColor="systemBrownColor"/>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GYV-Ig-y9B">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                                <standardMapConfiguration key="preferredConfiguration"/>
+                            </mapView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OWp-dP-iAW">
+                                <rect key="frame" x="153.66666666666666" y="775" width="85.666666666666657" height="35"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Next"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Go Next"/>
                                 <connections>
-                                    <action selector="pressNext:" destination="BYZ-38-t0r" eventType="touchUpInside" id="UaD-zP-SXt"/>
+                                    <action selector="nextPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="O6j-PJ-hS5"/>
                                 </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="L3X-Qe-2Mj" firstAttribute="top" secondItem="ImU-rl-Ccw" secondAttribute="bottom" constant="323" id="6sY-dK-YFv"/>
-                            <constraint firstItem="ImU-rl-Ccw" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="8rx-Q5-xvD"/>
-                            <constraint firstItem="L3X-Qe-2Mj" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="edF-sj-MYc"/>
-                            <constraint firstItem="ImU-rl-Ccw" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="130" id="gVF-SV-CwU"/>
+                            <constraint firstItem="GYV-Ig-y9B" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="4ig-sQ-DaX"/>
+                            <constraint firstItem="OWp-dP-iAW" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="BJc-rc-eL0"/>
+                            <constraint firstItem="GYV-Ig-y9B" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="PXf-WK-TMJ"/>
+                            <constraint firstAttribute="bottom" secondItem="GYV-Ig-y9B" secondAttribute="bottom" id="f8n-FM-gW8"/>
+                            <constraint firstItem="GYV-Ig-y9B" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="jg4-Ny-7mM"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="OWp-dP-iAW" secondAttribute="bottom" constant="8" id="kz9-K8-DLV"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Dkk-6N-scy"/>
                     <connections>
-                        <outlet property="nextBtn" destination="L3X-Qe-2Mj" id="oVO-Yk-d9S"/>
+                        <outlet property="goNext" destination="OWp-dP-iAW" id="cCN-uf-PhE"/>
+                        <outlet property="mapView" destination="GYV-Ig-y9B" id="B0R-c3-8Df"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -73,9 +75,6 @@
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemBrownColor">
-            <color red="0.63529411764705879" green="0.51764705882352946" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

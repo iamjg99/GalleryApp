@@ -1,5 +1,5 @@
 //
-//  ImageListViewController.swift
+//  ProductViewController.swift
 //  GalleryApp
 //
 //  Created by Jatin on 25/11/23.
@@ -10,25 +10,24 @@ import Alamofire
 import AlamofireImage
 import CoreData
 
-class ImageListViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class ProductViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
     
     @IBOutlet weak var profileBtn: UIBarButtonItem!
     @IBOutlet weak var collectionView: UICollectionView!
     var imageUrls: [String] = []
     var coreDataImages: [NSManagedObject] = []
+    var products: [Product] = [
+        Product(id: "1", name: "Apparel 1", price: 29.99, image: UIImage(systemName: "folder.fill") ?? UIImage()),
+        Product(id: "2", name: "Apparel 2", price: 39.99, image: UIImage(systemName: "folder") ?? UIImage()),
+            // Add more products as needed
+        ]
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.hidesBackButton = true
         collectionView.delegate = self
         collectionView.dataSource = self
-        
-        if InternetConnectivity.isConnectedToInternet() {
-            fetchRandomImages()
-        } else {
-            fetchImagesFromCoreData()
-        }
-        coreDataImages = fetchImagesFromCoreData()
     }
     
     @IBAction func openProfile(_ sender: Any) {
@@ -36,101 +35,78 @@ class ImageListViewController: UIViewController, UICollectionViewDelegate, UICol
         navigationController?.pushViewController(profileController, animated: false)
     }
     
-    func fetchRandomImages() {
-        let accessKey = "XJVRNjaRgAwWk2HZR-wQ_qF7hFo-r4vSEXjmFx7OqvM"
-        let url = "https://api.unsplash.com/photos/random?count=25"
-        
-        AF.request(url, method: .get, headers: ["Authorization": "Client-ID \(accessKey)"])
-            .responseJSON { response in
-                switch response.result {
-                case .success(let value):
-                    if let jsonArray = value as? [[String: Any]] {
-                        self.imageUrls = jsonArray.compactMap { $0["urls"] as? [String: Any] } .compactMap { $0["regular"] as? String }
-                        for imageData in jsonArray {
-                            if let imageURLString = imageData["urls"] as? [String: Any],
-                               let imageURL = imageURLString["regular"] as? String {
-                                self.saveImageToCoreData(imageURL: imageURL)
-                            }
-                        }
-                        
-                        self.collectionView.reloadData()
-                    }
-                case .failure(let error):
-                    print(error)
-                }
-            }
-    }
-    
-    func saveImageToCoreData(imageURL: String) {
-            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-                return
-            }
-
-            let managedContext = appDelegate.persistentContainer.viewContext
-            let entity = NSEntityDescription.entity(forEntityName: "Images", in: managedContext)!
-            let imageObject = NSManagedObject(entity: entity, insertInto: managedContext)
-
-            AF.request(imageURL).responseImage { response in
-                if case .success(let image) = response.result {
-                    if let imageData = image.jpegData(compressionQuality: 1.0) {
-                        imageObject.setValue(imageData, forKey: "imageData")
-
-                        do {
-                            try managedContext.save()
-                        } catch let error as NSError {
-                            print("Could not save. \(error), \(error.userInfo)")
-                        }
-                    }
-                }
-            }
-        }
-    
-
-    func fetchImagesFromCoreData() -> [NSManagedObject] {
-        let managedContext = CoreDataStack.persistentContainer.viewContext
-            let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Images")
-
-            do {
-                let images = try managedContext.fetch(fetchRequest)
-                self.coreDataImages = try managedContext.fetch(fetchRequest)
-                return images
-            } catch let error as NSError {
-                print("Could not fetch. \(error), \(error.userInfo)")
-                return []
-            }
-        }
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if InternetConnectivity.isConnectedToInternet() {
-            return imageUrls.count
-        } else {
-            return coreDataImages.count
-        }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ListViewCell", for: indexPath) as! ListViewCell
-        cell.loader.isHidden = false
-        cell.loader.startAnimating()
-        
-        if InternetConnectivity.isConnectedToInternet() {
-            if let imageURL = URL(string: imageUrls[indexPath.item]) {
-                cell.imageView.af.setImage(withURL: imageURL, placeholderImage: UIImage(named: "placeholder"), completion:  { _ in
-                    cell.loader.stopAnimating()
-                    cell.loader.isHidden = true
-                })
+           return products.count
+       }
+
+       func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+           guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ProductCell", for: indexPath) as? ProductCollectionViewCell else {
+               fatalError("Cell not configured properly")
+           }
+
+           let product = products[indexPath.item]
+           cell.configure(with: product)
+           cell.isUserInteractionEnabled = true
+           return cell
+       }
+
+       // MARK: - UICollectionViewDelegate
+
+       func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+           let selectedProduct = products[indexPath.item]
+           print("hi", indexPath.row, indexPath.section)
+           showProductDetails(for: selectedProduct)
+       }
+
+    func showProductDetails(for product: Product) {
+            let storyboard = UIStoryboard(name: "CartViewCell", bundle: nil) // Change "Main" to your storyboard name if different
+            if let productDetailsVC = storyboard.instantiateViewController(withIdentifier: "CartViewController") as? CartViewController {
+                productDetailsVC.product = product
+                navigationController?.pushViewController(productDetailsVC, animated: true)
             }
-        } else {
-            if let imageData = coreDataImages[indexPath.item].value(forKey: "imageData") as? Data {
-                if let image = UIImage(data: imageData) {
-                    cell.loader.stopAnimating()
-                    cell.loader.isHidden = true
-                    cell.imageView.image = image
-                }
-            }
         }
-        return cell
-    }
 }
 
 
+
+struct Product {
+    var id: String
+    var name: String
+    var price: Double
+    var image: UIImage
+    // Add more properties as needed
+}
+
+class ShoppingCart {
+    static let shared = ShoppingCart()
+
+    private init() {}
+
+    var products: [CartItem] = []
+
+    func addProduct(_ product: Product) {
+        if let index = products.firstIndex(where: { $0.product.id == product.id }) {
+            // Product already exists in the cart, update quantity
+            products[index].quantity += 1
+        } else {
+            // Product doesn't exist in the cart, add it
+            products.append(CartItem(product: product, quantity: 1))
+        }
+    }
+
+    func removeProduct(_ product: Product) {
+        if let index = products.firstIndex(where: { $0.product.id == product.id }) {
+            // Decrement quantity or remove if quantity is 1
+            if products[index].quantity > 1 {
+                products[index].quantity -= 1
+            } else {
+                products.remove(at: index)
+            }
+        }
+    }
+}
+
+struct CartItem {
+    var product: Product
+    var quantity: Int
+}

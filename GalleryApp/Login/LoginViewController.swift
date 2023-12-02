@@ -51,7 +51,7 @@ class LoginViewController: UIViewController {
                 print("Google Sign-In failed: \(error.localizedDescription)")
                 return;
             } else {
-                guard let ListController = UIStoryboard(name: "ImageListView", bundle: nil).instantiateViewController(withIdentifier: "ImageListViewController") as?  ImageListViewController else {fatalError()}
+                guard let ListController = UIStoryboard(name: "ImageListView", bundle: nil).instantiateViewController(withIdentifier: "ProductViewController") as?  ProductViewController else {fatalError()}
                 self?.navigationController?.pushViewController(ListController, animated: false)
                 LocalStorage.shared.setUserIsLoggedIn(true)
             }
